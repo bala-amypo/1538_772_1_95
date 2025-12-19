@@ -1,48 +1,72 @@
 package com.example.demo.model;
 
+
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import com.example.demo.exception.BadRequestException;
+
 
 @Entity
+@Table(name = "transaction_logs")
 public class TransactionLog {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    private double amount;
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+private Long id;
 
-    private LocalDate date;
 
-    @ManyToOne
-    private Category category;
+@ManyToOne(optional = false)
+private User user;
 
-    // Getters & Setters
-    public Long getId() {
-        return id;
-    }
 
-    public double getAmount() {
-        return amount;
-    }
+@ManyToOne(optional = false)
+private Category category;
 
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
 
-    public LocalDate getDate() {
-        return date;
-    }
+private Double amount;
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
 
-    public Category getCategory() {
-        return category;
-    }
+private String description;
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
+
+private LocalDate transactionDate;
+
+
+public TransactionLog() {}
+
+
+public TransactionLog(Long id, User user, Category category, Double amount,
+String description, LocalDate transactionDate) {
+this.id = id;
+this.user = user;
+this.category = category;
+this.amount = amount;
+this.description = description;
+this.transactionDate = transactionDate;
+}
+
+
+public void validate() {
+if (amount == null || amount <= 0) {
+throw new BadRequestException("Amount must be greater than 0");
+}
+if (transactionDate == null || transactionDate.isAfter(LocalDate.now())) {
+throw new BadRequestException("Transaction date cannot be in the future");
+}
+}
+
+
+public Long getId() { return id; }
+public void setId(Long id) { this.id = id; }
+public User getUser() { return user; }
+public void setUser(User user) { this.user = user; }
+public Category getCategory() { return category; }
+public void setCategory(Category category) { this.category = category; }
+public Double getAmount() { return amount; }
+public void setAmount(Double amount) { this.amount = amount; }
+public String getDescription() { return description; }
+public void setDescription(String description) { this.description = description; }
+public LocalDate getTransactionDate() { return transactionDate; }
+public void setTransactionDate(LocalDate transactionDate) { this.transactionDate = transactionDate; }
 }
