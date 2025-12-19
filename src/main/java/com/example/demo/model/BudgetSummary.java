@@ -1,7 +1,8 @@
 @Entity
 public class BudgetSummary {
 
-    @Id @GeneratedValue
+    @Id 
+    @GeneratedValue
     private Long id;
 
     @OneToOne

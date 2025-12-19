@@ -1,6 +1,7 @@
 @Entity
 public class Category {
-    @Id @GeneratedValue
+    @Id 
+    @GeneratedValue
     private Long id;
 
     @Column(unique = true)

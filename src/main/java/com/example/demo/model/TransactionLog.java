@@ -1,6 +1,7 @@
 @Entity
 public class TransactionLog {
-    @Id @GeneratedValue
+    @Id 
+    @GeneratedValue
     private Long id;
 
     @ManyToOne
