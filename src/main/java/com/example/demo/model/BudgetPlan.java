@@ -1,17 +1,38 @@
-@Entity
-@Table(uniqueConstraints =
- @UniqueConstraint(columnNames={"user_id","month","year"}))
-public class BudgetPlan {
+package com.example.demo.model;
 
-    @Id @GeneratedValue
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+public class BudgetSummary {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private User user;
+    private double totalSpent;
 
-    private Integer month;
-    private Integer year;
+    private LocalDateTime createdAt;
 
-    private Double incomeTarget;
-    private Double expenseLimit;
+    @PrePersist
+    public void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    // Getters & Setters
+    public Long getId() {
+        return id;
+    }
+
+    public double getTotalSpent() {
+        return totalSpent;
+    }
+
+    public void setTotalSpent(double totalSpent) {
+        this.totalSpent = totalSpent;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
 }
