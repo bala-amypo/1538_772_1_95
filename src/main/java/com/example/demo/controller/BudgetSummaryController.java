@@ -1,27 +1,21 @@
+package com.example.demo.controller;
+
+import com.example.demo.model.BudgetSummary;
+import com.example.demo.service.BudgetSummaryService;
+import org.springframework.web.bind.annotation.*;
+
 @RestController
-@RequestMapping("/summary")
+@RequestMapping("/api/budget-summary")
 public class BudgetSummaryController {
 
-    @PostMapping("/generate/{budgetPlanId}")
-    public BudgetSummary generate(@PathVariable Long budgetPlanId) {
-        BudgetPlan plan = planRepo.findById(budgetPlanId).orElseThrow();
-        double expense = 0;
-        double income = 0;
+    private final BudgetSummaryService budgetSummaryService;
 
-        String status = expense <= plan.getExpenseLimit()
-                ? "UNDER_LIMIT" : "OVER_LIMIT";
-
-        BudgetSummary summary = new BudgetSummary();
-        summary.setBudgetPlan(plan);
-        summary.setTotalExpense(expense);
-        summary.setTotalIncome(income);
-        summary.setStatus(status);
-
-        return summaryRepo.save(summary);
+    public BudgetSummaryController(BudgetSummaryService budgetSummaryService) {
+        this.budgetSummaryService = budgetSummaryService;
     }
 
-    @GetMapping("/{budgetPlanId}")
-    public BudgetSummary get(@PathVariable Long budgetPlanId) {
-        return summaryRepo.findByBudgetPlan(planRepo.findById(budgetPlanId).orElseThrow()).orElseThrow();
+    @PostMapping
+    public BudgetSummary createSummary(@RequestBody BudgetSummary budgetSummary) {
+        return budgetSummaryService.save(budgetSummary);
     }
 }

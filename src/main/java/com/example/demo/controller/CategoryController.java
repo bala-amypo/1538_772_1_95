@@ -1,16 +1,28 @@
+package com.example.demo.controller;
+
+import com.example.demo.model.Category;
+import com.example.demo.service.CategoryService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/api/categories")
 public class CategoryController {
 
+    private final CategoryService categoryService;
+
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
+
     @PostMapping
-    public Category create(@RequestBody Category c) {
-        if(repo.existsByName(c.getName()))
-            throw new RuntimeException("Duplicate category");
-        return repo.save(c);
+    public Category createCategory(@RequestBody Category category) {
+        return categoryService.save(category);
     }
 
     @GetMapping
-    public List<Category> list() {
-        return repo.findAll();
+    public List<Category> getAllCategories() {
+        return categoryService.findAll();
     }
 }

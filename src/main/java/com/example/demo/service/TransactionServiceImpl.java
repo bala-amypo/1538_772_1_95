@@ -1,26 +1,28 @@
-package com.example.budget.service.impl;
+package com.example.demo.service.impl;
 
-import com.example.budget.model.TransactionLog;
-import com.example.budget.repository.TransactionRepository;
-import com.example.budget.service.TransactionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.model.TransactionLog;
+import com.example.demo.repository.TransactionLogRepository;
+import com.example.demo.service.TransactionService;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
-    @Autowired
-    private TransactionRepository transactionRepository;
+    private final TransactionLogRepository transactionLogRepository;
 
-    @Override
-    public TransactionLog addTransaction(Long userId, TransactionLog log) {
-        log.setUserId(userId);
-        return transactionRepository.save(log);
+    public TransactionServiceImpl(TransactionLogRepository transactionLogRepository) {
+        this.transactionLogRepository = transactionLogRepository;
     }
 
     @Override
-    public List<TransactionLog> getUserTransactions(Long userId) {
-        return transactionRepository.findByUserId(userId);
+    public TransactionLog save(TransactionLog transactionLog) {
+        return transactionLogRepository.save(transactionLog);
+    }
+
+    @Override
+    public List<TransactionLog> findAll() {
+        return transactionLogRepository.findAll();
     }
 }

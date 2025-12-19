@@ -1,25 +1,21 @@
-package com.example.budget.service.impl;
+package com.example.demo.service.impl;
 
-import com.example.budget.model.BudgetPlan;
-import com.example.budget.repository.BudgetPlanRepository;
-import com.example.budget.service.BudgetPlanService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.model.BudgetPlan;
+import com.example.demo.repository.BudgetPlanRepository;
+import com.example.demo.service.BudgetPlanService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BudgetPlanServiceImpl implements BudgetPlanService {
 
-    @Autowired
-    private BudgetPlanRepository budgetPlanRepository;
+    private final BudgetPlanRepository budgetPlanRepository;
 
-    @Override
-    public BudgetPlan createBudgetPlan(Long userId, BudgetPlan plan) {
-        plan.setUserId(userId);
-        return budgetPlanRepository.save(plan);
+    public BudgetPlanServiceImpl(BudgetPlanRepository budgetPlanRepository) {
+        this.budgetPlanRepository = budgetPlanRepository;
     }
 
     @Override
-    public BudgetPlan getBudgetPlan(Long userId, Integer month, Integer year) {
-        return budgetPlanRepository.findByUserIdAndMonthAndYear(userId, month, year);
+    public BudgetPlan save(BudgetPlan budgetPlan) {
+        return budgetPlanRepository.save(budgetPlan);
     }
 }

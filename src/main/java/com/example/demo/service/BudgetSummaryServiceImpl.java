@@ -1,26 +1,21 @@
-package com.example.budget.service.impl;
+package com.example.demo.service.impl;
 
-import com.example.budget.model.BudgetSummary;
-import com.example.budget.repository.BudgetSummaryRepository;
-import com.example.budget.service.BudgetSummaryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.model.BudgetSummary;
+import com.example.demo.repository.BudgetSummaryRepository;
+import com.example.demo.service.BudgetSummaryService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BudgetSummaryServiceImpl implements BudgetSummaryService {
 
-    @Autowired
-    private BudgetSummaryRepository budgetSummaryRepository;
+    private final BudgetSummaryRepository budgetSummaryRepository;
 
-    @Override
-    public BudgetSummary generateSummary(Long budgetPlanId) {
-        BudgetSummary summary = new BudgetSummary();
-        summary.setBudgetPlanId(budgetPlanId);
-        return budgetSummaryRepository.save(summary);
+    public BudgetSummaryServiceImpl(BudgetSummaryRepository budgetSummaryRepository) {
+        this.budgetSummaryRepository = budgetSummaryRepository;
     }
 
     @Override
-    public BudgetSummary getSummary(Long budgetPlanId) {
-        return budgetSummaryRepository.findByBudgetPlanId(budgetPlanId);
+    public BudgetSummary save(BudgetSummary budgetSummary) {
+        return budgetSummaryRepository.save(budgetSummary);
     }
 }

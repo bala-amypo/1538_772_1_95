@@ -1,19 +1,21 @@
+package com.example.demo.controller;
+
+import com.example.demo.model.BudgetPlan;
+import com.example.demo.service.BudgetPlanService;
+import org.springframework.web.bind.annotation.*;
+
 @RestController
-@RequestMapping("/budgets")
+@RequestMapping("/api/budget-plans")
 public class BudgetPlanController {
 
-    @PostMapping("/{userId}")
-    public BudgetPlan create(@PathVariable Long userId,
-                             @RequestBody BudgetPlan plan) {
-        if(plan.getMonth() < 1 || plan.getMonth() > 12)
-            throw new RuntimeException("Invalid month");
-        return repo.save(plan);
+    private final BudgetPlanService budgetPlanService;
+
+    public BudgetPlanController(BudgetPlanService budgetPlanService) {
+        this.budgetPlanService = budgetPlanService;
     }
 
-    @GetMapping("/{userId}/{month}/{year}")
-    public BudgetPlan getPlan(@PathVariable Long userId,
-                              @PathVariable Integer month,
-                              @PathVariable Integer year) {
-        return repo.findByUserAndMonthAndYear(user, month, year).orElseThrow();
+    @PostMapping
+    public BudgetPlan createBudgetPlan(@RequestBody BudgetPlan budgetPlan) {
+        return budgetPlanService.save(budgetPlan);
     }
 }
