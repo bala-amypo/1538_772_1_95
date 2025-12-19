@@ -14,7 +14,7 @@ public class OpenApiConfig {
         return new OpenAPI()
                 // You need to change the port as per your server
                 .servers(List.of(
-                        new Server().url("https://meet.google.com/jmp-wsuv-xbn")
+                        new Server().url("https://9146.408procr.amypo.ai/")
                 ));
         }
 }
