@@ -1,8 +1,10 @@
-package com.example.budget.service;
+package com.example.demo.service;
 
-import com.example.budget.model.BudgetSummary;
+import com.example.demo.model.BudgetSummary;
 
 public interface BudgetSummaryService {
+
     BudgetSummary generateSummary(Long budgetPlanId);
+
     BudgetSummary getSummary(Long budgetPlanId);
 }
