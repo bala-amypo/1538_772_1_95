@@ -2,42 +2,37 @@ package com.example.demo.service.impl;
 
 import com.example.demo.exception.BadRequestException;
 import com.example.demo.model.BudgetPlan;
-import com.example.demo.model.User;
 import com.example.demo.repository.BudgetPlanRepository;
-import com.example.demo.repository.UserRepository;
 import com.example.demo.service.BudgetPlanService;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class BudgetPlanServiceImpl implements BudgetPlanService {
 
     private final BudgetPlanRepository budgetPlanRepository;
-    private final UserRepository userRepository;
 
-    public BudgetPlanServiceImpl(BudgetPlanRepository budgetPlanRepository,
-                                 UserRepository userRepository) {
+    public BudgetPlanServiceImpl(BudgetPlanRepository budgetPlanRepository) {
         this.budgetPlanRepository = budgetPlanRepository;
-        this.userRepository = userRepository;
     }
 
     @Override
-    public BudgetPlan createBudgetPlan(Long userId, BudgetPlan plan) {
-        User user = userRepository.findById(userId).orElseThrow();
-        plan.setUser(user);
-        plan.validate();
-
-        if (budgetPlanRepository
-                .findByUserAndMonthAndYear(user, plan.getMonth(), plan.getYear())
-                .isPresent()) {
-            throw new BadRequestException("Budget plan already exists");
+    public BudgetPlan save(BudgetPlan plan) {
+        if (plan.getLimitAmount() <= 0) {
+            throw new BadRequestException("Limit amount must be greater than zero");
         }
-
         return budgetPlanRepository.save(plan);
     }
 
     @Override
-    public BudgetPlan getBudgetPlan(Long userId, Integer month, Integer year) {
-        User user = userRepository.findById(userId).orElseThrow();
-        return budgetPlanRepository
-                .findByUserAndMonthAndYear(user, month, year)
-                .orElse(null);
+    public List<BudgetPlan> getAll() {
+        return budgetPlanRepository.findAll();
+    }
+
+    @Override
+    public BudgetPlan getById(Long id) {
+        return budgetPlanRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("Budget plan not found"));
     }
 }
