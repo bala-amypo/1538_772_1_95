@@ -10,19 +10,19 @@ import java.util.List;
 @RequestMapping("/categories")
 public class CategoryController {
 
-    private final CategoryService categoryService;
+    private final CategoryService service;
 
-    public CategoryController(CategoryService categoryService) {
-        this.categoryService = categoryService;
+    public CategoryController(CategoryService service) {
+        this.service = service;
     }
 
     @PostMapping
-    public Category addCategory(@RequestBody Category category) {
-        return categoryService.addCategory(category);
+    public Category create(@RequestBody Category category) {
+        return service.save(category);
     }
 
     @GetMapping
-    public List<Category> getAllCategories() {
-        return categoryService.getAllCategories();
+    public List<Category> getAll() {
+        return service.getAll();
     }
 }
