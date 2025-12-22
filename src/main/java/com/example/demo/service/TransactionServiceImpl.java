@@ -10,19 +10,24 @@ import java.util.List;
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
-    private final TransactionLogRepository transactionLogRepository;
+    private final TransactionLogRepository transactionRepository;
 
-    public TransactionServiceImpl(TransactionLogRepository transactionLogRepository) {
-        this.transactionLogRepository = transactionLogRepository;
+    public TransactionServiceImpl(TransactionLogRepository transactionRepository) {
+        this.transactionRepository = transactionRepository;
     }
 
     @Override
-    public TransactionLog save(TransactionLog transactionLog) {
-        return transactionLogRepository.save(transactionLog);
+    public TransactionLog save(TransactionLog transaction) {
+        return transactionRepository.save(transaction);
     }
 
     @Override
-    public List<TransactionLog> findAll() {
-        return transactionLogRepository.findAll();
+    public List<TransactionLog> getAll() {
+        return transactionRepository.findAll();
+    }
+
+    @Override
+    public List<TransactionLog> getByCategory(Long categoryId) {
+        return transactionRepository.findByCategoryId(categoryId);
     }
 }
