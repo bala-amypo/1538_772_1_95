@@ -1,10 +1,17 @@
 package com.example.demo.service;
 
 import com.example.demo.model.BudgetPlan;
-import java.util.List;
+import com.example.demo.model.User;
+
+import java.util.Optional;
 
 public interface BudgetPlanService {
-    BudgetPlan save(BudgetPlan plan);
-    List<BudgetPlan> getAll();
-    BudgetPlan getById(Long id);
+
+    BudgetPlan save(BudgetPlan budgetPlan);
+
+    Optional<BudgetPlan> getByUserMonthYear(
+            User user,
+            Integer month,
+            Integer year
+    );
 }

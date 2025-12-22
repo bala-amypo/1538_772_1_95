@@ -1,12 +1,12 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.exception.BadRequestException;
 import com.example.demo.model.BudgetPlan;
+import com.example.demo.model.User;
 import com.example.demo.repository.BudgetPlanRepository;
 import com.example.demo.service.BudgetPlanService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BudgetPlanServiceImpl implements BudgetPlanService {
@@ -18,21 +18,16 @@ public class BudgetPlanServiceImpl implements BudgetPlanService {
     }
 
     @Override
-    public BudgetPlan save(BudgetPlan plan) {
-        if (plan.getLimitAmount() <= 0) {
-            throw new BadRequestException("Limit amount must be greater than zero");
-        }
-        return budgetPlanRepository.save(plan);
+    public BudgetPlan save(BudgetPlan budgetPlan) {
+        return budgetPlanRepository.save(budgetPlan);
     }
 
     @Override
-    public List<BudgetPlan> getAll() {
-        return budgetPlanRepository.findAll();
-    }
-
-    @Override
-    public BudgetPlan getById(Long id) {
-        return budgetPlanRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException("Budget plan not found"));
+    public Optional<BudgetPlan> getByUserMonthYear(
+            User user,
+            Integer month,
+            Integer year
+    ) {
+        return budgetPlanRepository.findByUserAndMonthAndYear(user, month, year);
     }
 }
