@@ -14,5 +14,27 @@ public class BudgetSummary {
     @OneToOne
     private User user;
 
-    // getters & setters
+    public Long getId() {
+        return id;
+    }
+
+    public double getTotalSpent() {
+        return totalSpent;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTotalSpent(double totalSpent) {
+        this.totalSpent = totalSpent;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
