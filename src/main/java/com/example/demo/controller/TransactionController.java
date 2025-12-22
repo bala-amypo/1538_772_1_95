@@ -10,21 +10,19 @@ import java.util.List;
 @RequestMapping("/transactions")
 public class TransactionController {
 
-    private final TransactionService transactionService;
+    private final TransactionService service;
 
-    public TransactionController(TransactionService transactionService) {
-        this.transactionService = transactionService;
+    public TransactionController(TransactionService service) {
+        this.service = service;
     }
 
-    @PostMapping("/{userId}")
-    public TransactionLog addTransaction(
-            @PathVariable Long userId,
-            @RequestBody TransactionLog log) {
-        return transactionService.addTransaction(userId, log);
+    @PostMapping
+    public TransactionLog save(@RequestBody TransactionLog log) {
+        return service.save(log);
     }
 
-    @GetMapping("/user/{userId}")
-    public List<TransactionLog> getUserTransactions(@PathVariable Long userId) {
-        return transactionService.getUserTransactions(userId);
+    @GetMapping
+    public List<TransactionLog> getAll() {
+        return service.getAll();
     }
 }
