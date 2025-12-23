@@ -14,8 +14,15 @@ public class BudgetSummaryController {
         this.service = service;
     }
 
+    // GET summary by userId
     @GetMapping("/{userId}")
     public BudgetSummary getSummary(@PathVariable Long userId) {
         return service.getByUserId(userId);
+    }
+
+    // POST create budget summary
+    @PostMapping
+    public BudgetSummary createSummary(@RequestBody BudgetSummary budgetSummary) {
+        return service.save(budgetSummary);
     }
 }
