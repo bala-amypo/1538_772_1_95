@@ -42,25 +42,21 @@ public class BudgetPlanController {
         return budgetPlanService.save(plan);
     }
 
-    // ---------------- GET ALL ----------------
     @GetMapping
     public List<BudgetPlan> getAll() {
         return budgetPlanService.getAll();
     }
 
-    // ---------------- GET BY ID ----------------
     @GetMapping("/{id}")
     public BudgetPlan getById(@PathVariable Long id) {
         return budgetPlanService.getById(id);
     }
 
-    // ---------------- GET BY USER ----------------
     @GetMapping("/user/{userId}")
     public List<BudgetPlan> getByUser(@PathVariable Long userId) {
         return budgetPlanService.getByUserId(userId);
     }
 
-    // ---------------- GET BY USER + MONTH + YEAR ----------------
     @GetMapping("/search")
     public BudgetPlan getByUserAndMonthAndYear(
             @RequestParam Long userId,
