@@ -6,6 +6,8 @@ import com.example.demo.service.BudgetPlanService;
 import com.example.demo.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/budget-plans")
 public class BudgetPlanController {
@@ -21,6 +23,7 @@ public class BudgetPlanController {
         this.userService = userService;
     }
 
+    // ---------------- CREATE ----------------
     @PostMapping
     public BudgetPlan create(
             @RequestParam Long userId,
@@ -31,11 +34,39 @@ public class BudgetPlanController {
         User user = userService.getById(userId);
 
         BudgetPlan plan = new BudgetPlan();
-        plan.setUser(user);           // ✅ REQUIRED
+        plan.setUser(user);
         plan.setMonth(month);
         plan.setYear(year);
         plan.setLimitAmount(limitAmount);
 
         return budgetPlanService.save(plan);
+    }
+
+    // ---------------- GET ALL ----------------
+    @GetMapping
+    public List<BudgetPlan> getAll() {
+        return budgetPlanService.getAll();
+    }
+
+    // ---------------- GET BY ID ----------------
+    @GetMapping("/{id}")
+    public BudgetPlan getById(@PathVariable Long id) {
+        return budgetPlanService.getById(id);
+    }
+
+    // ---------------- GET BY USER ----------------
+    @GetMapping("/user/{userId}")
+    public List<BudgetPlan> getByUser(@PathVariable Long userId) {
+        return budgetPlanService.getByUserId(userId);
+    }
+
+    // ---------------- GET BY USER + MONTH + YEAR ----------------
+    @GetMapping("/search")
+    public BudgetPlan getByUserAndMonthAndYear(
+            @RequestParam Long userId,
+            @RequestParam Integer month,
+            @RequestParam Integer year
+    ) {
+        return budgetPlanService.getByUserAndMonthAndYear(userId, month, year);
     }
 }
