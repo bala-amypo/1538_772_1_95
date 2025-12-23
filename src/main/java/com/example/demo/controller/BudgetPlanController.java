@@ -23,7 +23,6 @@ public class BudgetPlanController {
         this.userService = userService;
     }
 
-    // ---------------- CREATE ----------------
     @PostMapping
     public BudgetPlan create(
             @RequestParam Long userId,
