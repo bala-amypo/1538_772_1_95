@@ -6,7 +6,5 @@ public interface UserService {
 
     User register(User user);
 
-    User findByUsername(String username);
-
-    User getById(Long id);   // ✅ ADD THIS
+    User login(String email, String password);
 }

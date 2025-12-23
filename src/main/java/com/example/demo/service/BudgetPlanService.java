@@ -6,13 +6,7 @@ import java.util.List;
 
 public interface BudgetPlanService {
 
-    BudgetPlan create(BudgetPlan plan);
-
-    List<BudgetPlan> getAll();
-
-    BudgetPlan getById(Long id);
+    BudgetPlan save(BudgetPlan budgetPlan);
 
     List<BudgetPlan> getByUserId(Long userId);
-
-    BudgetPlan getByUserAndMonthAndYear(Long userId, Integer month, Integer year);
 }

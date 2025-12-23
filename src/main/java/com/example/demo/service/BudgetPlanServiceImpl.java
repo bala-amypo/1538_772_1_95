@@ -18,30 +18,16 @@ public class BudgetPlanServiceImpl implements BudgetPlanService {
     }
 
     @Override
-    public BudgetPlan create(BudgetPlan plan) {
-        return repository.save(plan);
-    }
-
-    @Override
-    public List<BudgetPlan> getAll() {
-        return repository.findAll();
-    }
-
-    @Override
-    public BudgetPlan getById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("BudgetPlan not found"));
+    public BudgetPlan save(BudgetPlan budgetPlan) {
+        return repository.save(budgetPlan);
     }
 
     @Override
     public List<BudgetPlan> getByUserId(Long userId) {
-        return repository.findByUserId(userId);
-    }
-
-    @Override
-    public BudgetPlan getByUserAndMonthAndYear(Long userId, Integer month, Integer year) {
-        return repository
-                .findByUserIdAndMonthAndYear(userId, month, year)
-                .orElseThrow(() -> new ResourceNotFoundException("BudgetPlan not found"));
+        List<BudgetPlan> plans = repository.findByUserId(userId);
+        if (plans.isEmpty()) {
+            throw new ResourceNotFoundException("No budget plans found");
+        }
+        return plans;
     }
 }

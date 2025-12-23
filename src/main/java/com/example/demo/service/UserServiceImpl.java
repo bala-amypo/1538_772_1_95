@@ -9,29 +9,29 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+    private final UserRepository repository;
 
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserServiceImpl(UserRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public User register(User user) {
-        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
-            throw new ConflictException("Username already exists");
+        if (repository.existsByEmail(user.getEmail())) {
+            throw new ConflictException("Email already exists");
         }
-        return userRepository.save(user);
+        return repository.save(user);
     }
 
     @Override
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new ConflictException("User not found"));
-    }
+    public User login(String email, String password) {
+        User user = repository.findByEmail(email)
+                .orElseThrow(() -> new ConflictException("Invalid email"));
 
-    @Override
-    public User getById(Long id) {   // ✅ REQUIRED
-        return userRepository.findById(id)
-                .orElseThrow(() -> new ConflictException("User not found"));
+        if (!user.getPassword().equals(password)) {
+            throw new ConflictException("Invalid password");
+        }
+
+        return user;
     }
 }
