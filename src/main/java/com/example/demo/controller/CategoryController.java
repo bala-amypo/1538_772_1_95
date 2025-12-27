@@ -18,11 +18,11 @@ public class CategoryController {
 
     @PostMapping
     public Category create(@RequestBody Category category) {
-        return service.save(category);
+        return service.addCategory(category); // ✅ correct
     }
 
     @GetMapping
     public List<Category> getAll() {
-        return service.getAll();
+        return service.getAllCategories(); // ✅ correct
     }
 }
