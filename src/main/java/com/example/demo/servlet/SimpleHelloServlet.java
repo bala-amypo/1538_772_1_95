@@ -3,14 +3,15 @@ package com.example.demo.servlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 
 public class SimpleHelloServlet extends HttpServlet {
 
+    // MUST be public for tests
     @Override
-    protected void doGet(HttpServletRequest req,
-                         HttpServletResponse resp) throws IOException {
+    public void doGet(HttpServletRequest req,
+                      HttpServletResponse resp) throws IOException {
+
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.setContentType("text/plain");
         resp.getWriter().write("Hello from Simple Servlet");
@@ -18,6 +19,6 @@ public class SimpleHelloServlet extends HttpServlet {
 
     @Override
     public String getServletInfo() {
-        return "SimpleHelloServlet basic servlet";
+        return "SimpleHelloServlet";
     }
 }
