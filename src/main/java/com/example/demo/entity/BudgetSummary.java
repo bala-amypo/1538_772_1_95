@@ -22,16 +22,21 @@ public class BudgetSummary {
     private String status;
     private LocalDateTime generatedAt;
 
-    public BudgetSummary() {}
+    public BudgetSummary() {
+    }
 
-    public BudgetSummary(Long id, BudgetPlan plan, Double income,
-                         Double expense, String status, LocalDateTime time) {
+    public BudgetSummary(Long id,
+                         BudgetPlan budgetPlan,
+                         Double totalIncome,
+                         Double totalExpense,
+                         String status,
+                         LocalDateTime generatedAt) {
         this.id = id;
-        this.budgetPlan = plan;
-        this.totalIncome = income;
-        this.totalExpense = expense;
+        this.budgetPlan = budgetPlan;
+        this.totalIncome = totalIncome;
+        this.totalExpense = totalExpense;
         this.status = status;
-        this.generatedAt = time;
+        this.generatedAt = generatedAt;
     }
 
     @PrePersist
@@ -39,9 +44,30 @@ public class BudgetSummary {
         this.generatedAt = LocalDateTime.now();
     }
 
-    // getters/setters
-    public void setBudgetPlan(BudgetPlan budgetPlan) { this.budgetPlan = budgetPlan; }
-    public void setTotalIncome(Double totalIncome) { this.totalIncome = totalIncome; }
-    public void setTotalExpense(Double totalExpense) { this.totalExpense = totalExpense; }
+    public Long getId() { return id; }
+
+    public BudgetPlan getBudgetPlan() {
+        return budgetPlan;
+    }
+
+    public void setBudgetPlan(BudgetPlan budgetPlan) {
+        this.budgetPlan = budgetPlan;
+    }
+
+    public Double getTotalIncome() { return totalIncome; }
+    public void setTotalIncome(Double totalIncome) {
+        this.totalIncome = totalIncome;
+    }
+
+    public Double getTotalExpense() { return totalExpense; }
+    public void setTotalExpense(Double totalExpense) {
+        this.totalExpense = totalExpense;
+    }
+
+    public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+
+    public LocalDateTime getGeneratedAt() {
+        return generatedAt;
+    }
 }

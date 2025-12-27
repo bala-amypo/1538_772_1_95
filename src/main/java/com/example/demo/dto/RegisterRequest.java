@@ -6,7 +6,8 @@ public class RegisterRequest {
     private String email;
     private String password;
 
-    public RegisterRequest() {}
+    public RegisterRequest() {
+    }
 
     // REQUIRED BY TESTS
     public RegisterRequest(String name, String email, String password) {
@@ -15,7 +16,15 @@ public class RegisterRequest {
         this.password = password;
     }
 
-    public String getName() { return name; }
-    public String getEmail() { return email; }
-    public String getPassword() { return password; }
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }

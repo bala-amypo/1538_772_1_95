@@ -19,7 +19,8 @@ public class Category {
 
     private String type;
 
-    public Category() {}
+    public Category() {
+    }
 
     public Category(Long id, String name, String type) {
         this.id = id;
@@ -33,8 +34,9 @@ public class Category {
         }
     }
 
-    // getters/setters
     public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
     public String getName() { return name; }
     public String getType() { return type; }
 }

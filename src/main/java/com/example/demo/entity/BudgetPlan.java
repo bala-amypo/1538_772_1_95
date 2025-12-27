@@ -19,10 +19,15 @@ public class BudgetPlan {
     private Double incomeTarget;
     private Double expenseLimit;
 
-    public BudgetPlan() {}
+    public BudgetPlan() {
+    }
 
-    public BudgetPlan(Long id, User user, Integer month, Integer year,
-                      Double incomeTarget, Double expenseLimit) {
+    public BudgetPlan(Long id,
+                      User user,
+                      Integer month,
+                      Integer year,
+                      Double incomeTarget,
+                      Double expenseLimit) {
         this.id = id;
         this.user = user;
         this.month = month;
@@ -36,14 +41,18 @@ public class BudgetPlan {
             throw new BadRequestException("Invalid month");
         }
         if (incomeTarget < 0 || expenseLimit < 0) {
-            throw new BadRequestException("Amounts must be >= 0");
+            throw new BadRequestException("Invalid amounts");
         }
     }
 
-    // getters/setters
-    public void setUser(User user) { this.user = user; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
     public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
+
     public Integer getMonth() { return month; }
     public Integer getYear() { return year; }
+
     public Double getExpenseLimit() { return expenseLimit; }
 }
