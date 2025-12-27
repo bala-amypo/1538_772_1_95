@@ -18,26 +18,16 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category save(Category category) {
-        if (category.getName() == null || category.getName().isEmpty()) {
-            throw new BadRequestException("Category name cannot be empty");
+    public Category addCategory(Category category) {
+        if (categoryRepository.existsByName(category.getName())) {
+            throw new BadRequestException("Category already exists");
         }
+        category.validateType();
         return categoryRepository.save(category);
     }
 
     @Override
-    public Category getById(Long id) {
-        return categoryRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException("Category not found"));
-    }
-
-    @Override
-    public List<Category> getAll() {
+    public List<Category> getAllCategories() {
         return categoryRepository.findAll();
-    }
-
-    @Override
-    public void delete(Long id) {
-        categoryRepository.deleteById(id);
     }
 }

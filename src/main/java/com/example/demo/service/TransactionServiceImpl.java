@@ -1,7 +1,10 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.TransactionLog;
+import com.example.demo.model.User;
 import com.example.demo.repository.TransactionLogRepository;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.TransactionService;
 import org.springframework.stereotype.Service;
 
@@ -10,24 +13,31 @@ import java.util.List;
 @Service
 public class TransactionServiceImpl implements TransactionService {
 
-    private final TransactionLogRepository transactionRepository;
+    private final TransactionLogRepository transactionRepo;
+    private final UserRepository userRepository;
 
-    public TransactionServiceImpl(TransactionLogRepository transactionRepository) {
-        this.transactionRepository = transactionRepository;
+    public TransactionServiceImpl(TransactionLogRepository transactionRepo,
+                                  UserRepository userRepository) {
+        this.transactionRepo = transactionRepo;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public TransactionLog save(TransactionLog transaction) {
-        return transactionRepository.save(transaction);
+    public TransactionLog addTransaction(Long userId, TransactionLog log) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found"));
+
+        log.setUser(user);
+        log.validate();
+        return transactionRepo.save(log);
     }
 
     @Override
-    public List<TransactionLog> getAll() {
-        return transactionRepository.findAll();
-    }
-
-    @Override
-    public List<TransactionLog> getByCategory(Long categoryId) {
-        return transactionRepository.findByCategoryId(categoryId);
+    public List<TransactionLog> getUserTransactions(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("User not found"));
+        return transactionRepo.findByUser(user);
     }
 }
